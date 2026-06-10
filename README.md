@@ -24,3 +24,5 @@ uvicorn main:app --reload
     - Returns {"message":"Task tracker backend running"}
 - GET /tasks
     - Returns a list of tasks
+- POST /tasks
+    - Creates a new task given client JSON input, then appends it to the task list
