@@ -33,10 +33,11 @@ def home():
     return {"message": "Task tracker backend running"}
 
 
-#get tasks endpoint
+#get all tasks endpoint
 @app.get("/tasks")
-def get_tasks():
+def get_all_tasks():
     return tasks
+
 
 #create task endpoint
 @app.post("/tasks")
@@ -53,15 +54,34 @@ def create_task(task: Task):
     }
     tasks.append(new_task)
 
+
 #get single task endpoint
 @app.get("/tasks/{id}")
 def get_one_task(id: int):
     for x in tasks:
         if x["id"] == id:
             return x
-        
     #id not found
     return {"message": "A task with that ID does not exist"}
+
+
+#update task endpoint
+@app.patch("/tasks/{id}")
+def update_task(id: int, task: Task):
+    for currentTask in tasks:
+        if currentTask["id"] == id:
+            targetTask = currentTask
+            break
+    #id not found
+    if targetTask is None:
+        return {"message": "A task with that ID does not exist"}
+    
+    targetTask["title"] = task.title
+    targetTask["completed"] = task.completed
+
+    return {"message": f"Task with ID {id} has been updated"}
+    
+
 
 
 

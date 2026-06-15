@@ -28,3 +28,5 @@ uvicorn main:app --reload
     - Accepts task data in JSON format, creates a new task, and appends it to the task list
 - GET /tasks/{id}
     - Returns the task with the specified ID
+- PATCH /tasks/{id}
+    - Updates the task with the specified ID using client-provided JSON data
