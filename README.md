@@ -25,4 +25,6 @@ uvicorn main:app --reload
 - GET /tasks
     - Returns a list of tasks
 - POST /tasks
-    - Creates a new task given client JSON input, then appends it to the task list
+    - Accepts task data in JSON format, creates a new task, and appends it to the task list
+- GET /tasks/{id}
+    - Returns the task with the specified ID
