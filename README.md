@@ -30,3 +30,5 @@ uvicorn main:app --reload
     - Returns the task with the specified ID
 - PATCH /tasks/{id}
     - Updates the task with the specified ID using client-provided JSON data
+- DELETE /tasks/{id}
+    - Deletes the task with the specified ID

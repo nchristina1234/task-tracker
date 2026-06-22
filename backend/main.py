@@ -53,6 +53,7 @@ def create_task(task: Task):
         "completed": completed
     }
     tasks.append(new_task)
+    return {"message": f"New task with ID {id} has been created"}
 
 
 #get single task endpoint
@@ -75,11 +76,22 @@ def update_task(id: int, task: Task):
     #id not found
     if targetTask is None:
         return {"message": "A task with that ID does not exist"}
-    
     targetTask["title"] = task.title
     targetTask["completed"] = task.completed
-
     return {"message": f"Task with ID {id} has been updated"}
+
+#delete task endpoint
+@app.delete("/tasks/{id}")
+def delete_task(id: int):
+    for task in tasks:
+        if task["id"] == id:
+            targetTask = task
+            tasks.remove(task)
+            break
+    if targetTask is None:
+        return {"message": "A task with that ID does not exist"}
+    else:
+        return {"message": f"Task with ID {id} has been deleted"}
     
 
 
