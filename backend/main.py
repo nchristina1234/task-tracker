@@ -1,5 +1,13 @@
 from fastapi import FastAPI
-from models import Task
+from models import Task, TaskDB
+from database import engine, Base, SessionLocal
+
+#create database tables if they don't exist
+Base.metadata.create_all(bind=engine)
+
+#create a database session
+db = SessionLocal()
+
 
 #task data
 tasks = [
@@ -14,6 +22,7 @@ tasks = [
         "completed": False
     }
 ]
+
 
 #initial app
 global currentID

@@ -7,6 +7,8 @@ A task tracker backend built with FastAPI
 - Python
 - FastAPI
 - Uvicorn
+- SQLAlchemy
+- SQLite
 
 ## Running the Project
 
