@@ -54,7 +54,7 @@ def create_task(task: Task):
         db.add(new_task)
         db.commit()
         db.refresh(new_task)
-        return {"message": f"New task with ID {new_task.id} has been created"}
+        return new_task
     finally:
         db.close()
 
@@ -76,16 +76,19 @@ def get_one_task(id: int):
 #update task endpoint
 @app.patch("/tasks/{id}")
 def update_task(id: int, task: Task):
-    for currentTask in tasks:
-        if currentTask["id"] == id:
-            targetTask = currentTask
-            break
-    #id not found
-    if targetTask is None:
-        return {"message": "A task with that ID does not exist"}
-    targetTask["title"] = task.title
-    targetTask["completed"] = task.completed
-    return {"message": f"Task with ID {id} has been updated"}
+    db = SessionLocal()
+    try:
+        targetTask = db.query(TaskDB).filter(TaskDB.id == id).first()
+        if not targetTask:
+            raise HTTPException(status_code=404, detail=f"Task with ID {id} not found")
+        else:
+            targetTask.title = task.title
+            targetTask.completed = task.completed
+            db.commit()
+            db.refresh(targetTask)
+            return targetTask
+    finally:
+        db.close()
 
 #delete task endpoint
 @app.delete("/tasks/{id}")
