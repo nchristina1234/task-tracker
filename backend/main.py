@@ -5,9 +5,6 @@ from database import engine, Base, SessionLocal
 #create database tables if they don't exist
 Base.metadata.create_all(bind=engine)
 
-#create a database session
-db = SessionLocal()
-
 
 #task data
 tasks = [
@@ -39,7 +36,12 @@ def home():
 #get all tasks endpoint
 @app.get("/tasks")
 def get_all_tasks():
-    return tasks
+    db = SessionLocal()
+    try:
+        tasks = db.query(TaskDB).all()
+        return tasks
+    finally:
+        db.close()
 
 
 #create task endpoint

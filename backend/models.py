@@ -15,3 +15,7 @@ class TaskDB(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String, nullable=False)
     completed = Column(Boolean, default=False, nullable=False)
+
+    #define a string representation for the TaskDB class
+    def __repr__(self):
+        return f"TaskDB(id={self.id}, title='{self.title}', completed={self.completed})"
