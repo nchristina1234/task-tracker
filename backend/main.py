@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from models import Task, TaskDB
 from database import engine, Base, SessionLocal
 
@@ -43,7 +43,7 @@ def get_all_tasks():
 
 
 #create task endpoint
-@app.post("/tasks")
+@app.post("/tasks",status_code=201)
 def create_task(task: Task):
     db = SessionLocal()
     try:
@@ -58,17 +58,19 @@ def create_task(task: Task):
     finally:
         db.close()
 
-    
-
 
 #get single task endpoint
 @app.get("/tasks/{id}")
 def get_one_task(id: int):
-    for x in tasks:
-        if x["id"] == id:
-            return x
-    #id not found
-    return {"message": "A task with that ID does not exist"}
+    db = SessionLocal()
+    try:
+        task = db.query(TaskDB).filter(TaskDB.id == id).first()
+        if not task:
+            raise HTTPException(status_code=404, detail=f"Task with ID {id} not found")
+        else:
+            return task
+    finally:
+        db.close()
 
 
 #update task endpoint
