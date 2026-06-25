@@ -22,8 +22,6 @@ tasks = [
 
 
 #initial app
-global currentID
-currentID = 2
 app = FastAPI()
 
 
@@ -47,18 +45,20 @@ def get_all_tasks():
 #create task endpoint
 @app.post("/tasks")
 def create_task(task: Task):
-    global currentID
-    currentID = currentID + 1
-    id = currentID
-    title = task.title
-    completed = task.completed
-    new_task = {
-        "id": id,
-        "title": title,
-        "completed": completed
-    }
-    tasks.append(new_task)
-    return {"message": f"New task with ID {id} has been created"}
+    db = SessionLocal()
+    try:
+        new_task = TaskDB(
+            title=task.title,
+            completed=task.completed
+        )
+        db.add(new_task)
+        db.commit()
+        db.refresh(new_task)
+        return {"message": f"New task with ID {new_task.id} has been created"}
+    finally:
+        db.close()
+
+    
 
 
 #get single task endpoint
