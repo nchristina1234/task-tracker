@@ -1,6 +1,12 @@
 # Task Tracker
 
-A task tracker backend built with FastAPI
+A backend task tracking application featuring a RESTful API with persistent SQL storage and full CRUD functionality.
+
+## Features
+
+- RESTful CRUD API built with FastAPI
+- Persistent task storage using SQLite
+- SQLAlchemy ORM for mapping between Python objects and SQL tables
 
 ## Technologies
 
@@ -25,12 +31,12 @@ uvicorn main:app --reload
 - GET /
     - Returns {"message":"Task tracker backend running"}
 - GET /tasks
-    - Returns a list of tasks
+    - Returns all tasks
 - POST /tasks
-    - Accepts task data in JSON format, creates a new task, and appends it to the task list
+    - Creates a new task from client JSON input
 - GET /tasks/{id}
-    - Returns the task with the specified ID
+    - Returns the task with the client ID input
 - PATCH /tasks/{id}
-    - Updates the task with the specified ID using client-provided JSON data
+    - Updates the task with the client ID input
 - DELETE /tasks/{id}
-    - Deletes the task with the specified ID
+    - Deletes the task with the client ID input

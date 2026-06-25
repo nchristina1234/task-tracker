@@ -6,21 +6,6 @@ from database import engine, Base, SessionLocal
 Base.metadata.create_all(bind=engine)
 
 
-#task data
-tasks = [
-    {
-        "id": 1,
-        "title": "Learn FastAPI",
-        "completed": False
-    },
-    {
-        "id": 2,
-        "title": "Create endpoints",
-        "completed": False
-    }
-]
-
-
 #initial app
 app = FastAPI()
 
@@ -90,19 +75,20 @@ def update_task(id: int, task: Task):
     finally:
         db.close()
 
+
 #delete task endpoint
-@app.delete("/tasks/{id}")
+@app.delete("/tasks/{id}",status_code=204)
 def delete_task(id: int):
-    for task in tasks:
-        if task["id"] == id:
-            targetTask = task
-            tasks.remove(task)
-            break
-    if targetTask is None:
-        return {"message": "A task with that ID does not exist"}
-    else:
-        return {"message": f"Task with ID {id} has been deleted"}
-    
+    db = SessionLocal()
+    try:
+        task = db.query(TaskDB).filter(TaskDB.id == id).first()
+        if not task:
+            raise HTTPException(status_code=404, detail=f"Task with ID {id} not found")
+        else:
+            db.delete(task)
+            db.commit()
+    finally:
+        db.close()
 
 
 
