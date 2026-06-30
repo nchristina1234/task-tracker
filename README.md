@@ -5,7 +5,7 @@ A backend task tracking application featuring a RESTful API with persistent SQL 
 ## Features
 
 - RESTful CRUD API built with FastAPI
-- Persistent task storage using SQLite
+- Persistent task storage using PostgreSQL
 - SQLAlchemy ORM for mapping between Python objects and SQL tables
 
 ## Technologies
@@ -14,16 +14,33 @@ A backend task tracking application featuring a RESTful API with persistent SQL 
 - FastAPI
 - Uvicorn
 - SQLAlchemy
-- SQLite
+- PostgreSQL
 
 ## Running the Project
 
-1. Change to the backend directory
-2. Activate the virtual environment (venv)
-3. Start the FastAPI server
+1. Clone the repository.
+2. Change to the backend directory.
+3. Create and activate a virtual environment.
+4. Install the project dependencies (from requirements.txt)
+```bash
+pip install -r requirements.txt
+```
+5. Create a PostgreSQL database (e.g., `taskdb`).
+6. Create a `.env` file in the project root and add:
+
+```text
+DATABASE_URL=postgresql://<username>:<password>@localhost:5432/taskdb
+```
+
+7. Start the FastAPI server:
 
 ```bash
 uvicorn main:app --reload
+```
+8. Open the interactive Swagger API documentation at:
+
+```
+http://127.0.0.1:8000/docs
 ```
 
 ## Current Endpoints
