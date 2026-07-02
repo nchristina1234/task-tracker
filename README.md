@@ -57,3 +57,13 @@ http://127.0.0.1:8000/docs
     - Updates the task with the client ID input
 - DELETE /tasks/{id}
     - Deletes the task with the client ID input
+
+
+## Running Tests
+From the `backend` directory:
+
+```bash
+python -m pytest
+```
+
+This will run all backend API tests using pytest.
