@@ -60,10 +60,18 @@ http://127.0.0.1:8000/docs
 
 
 ## Running Tests
-From the `backend` directory:
+
+The application uses `pytest` for automated API testing and `pytest-cov` for measuring test coverage.
+
+From the `backend` directory, this will run all automated API tests:
 
 ```bash
 python -m pytest
 ```
 
-This will run all backend API tests using pytest.
+To run tests with coverage reporting:
+
+```bash
+python -m pytest --cov=. --cov-report=term-missing
+```
+
