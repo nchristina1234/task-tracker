@@ -1,23 +1,37 @@
 # Task Tracker
 
-A backend task tracking application featuring a RESTful API with persistent SQL storage and full CRUD functionality.
+A full-stack task tracking application featuring a RESTful API with persistent SQL storage, and a React + TypeScript frontend.
 
 ## Features
 
-- RESTful CRUD API built with FastAPI
+- RESTful API with full CRUD functionality built with FastAPI
 - Persistent task storage using PostgreSQL
 - SQLAlchemy ORM for mapping between Python objects and SQL tables
+- Automated API testing with pytest
+- React + TypeScript frontend application (in development)
 
 ## Technologies
 
+### Backend
 - Python
 - FastAPI
 - Uvicorn
 - SQLAlchemy
 - PostgreSQL
+- pytest
+- pytest-cov
+
+### Frontend
+- React
+- TypeScript
+- Vite
+- HTML
+- CSS
+- JavaScript
 
 ## Running the Project
 
+### Backend Setup
 1. Clone the repository.
 2. Change to the backend directory.
 3. Create and activate a virtual environment.
@@ -41,6 +55,21 @@ uvicorn main:app --reload
 
 ```
 http://127.0.0.1:8000/docs
+```
+
+### Frontend Setup
+1. Change to the frontend directory.
+2. Install frontend dependencies:
+```bash
+npm install
+```
+3. Start the React development server:
+```bash
+npm run dev
+```
+4. Open the frontend application at:
+```text
+http://localhost:5173/
 ```
 
 ## Current Endpoints
