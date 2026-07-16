@@ -1,11 +1,18 @@
 import './App.css'
 
 function App() {
-  const tasks = [
+  interface Task {
+    id: number;
+    title: string;
+    completed: boolean;
+  }
+
+  const tasks: Task[] = [
     { id: 1, title: "Learn React", completed: false },
     { id: 2, title: "Connect FastAPI", completed: false },
     { id: 3, title: "Build UI", completed: false },
-    { id: 4, title: "Fourth Task", completed: false }
+    { id: 4, title: "Fourth Task", completed: false },
+    { id: 5, title: "Last Task", completed: false}
   ];
 
   return (
