@@ -1,7 +1,8 @@
 import './App.css'
+import Task from "./components/Task";
 
 function App() {
-  interface Task {
+  type Task = {
     id: number;
     title: string;
     completed: boolean;
@@ -20,8 +21,9 @@ function App() {
       <h1>Task Tracker</h1>
       <h2>An application for managing your tasks</h2>
       {tasks.map(task => (
-        <p key={task.id}>{task.title}</p>
+        <Task key={task.id} title={task.title}/>
       ))}
+      
       <button>Add Task</button>
     </div>
   )
