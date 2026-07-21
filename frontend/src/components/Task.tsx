@@ -1,11 +1,14 @@
 type TaskProps = {
-    title: string
+    title: string;
+    completed: boolean;
 }
 
-function Task({ title }: TaskProps) {
+function Task({ title, completed }: TaskProps) {
+
   return (
     <div className="task">
-        <p>{title}</p>
+      {completed ? "✅" : "⬜"}
+      <p>{title}</p>   
     </div>
   );
 }
