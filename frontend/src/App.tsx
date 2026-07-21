@@ -18,12 +18,27 @@ function App() {
     { id: 5, title: "Last Task", completed: false}
   ]);
 
+  const toggleTask = (id: number) => {
+    const updatedTasks = tasks.map(task => {
+      if (task.id === id) {
+        return {
+          ...task,
+          completed: !task.completed,
+        };
+      }
+
+      return task;
+    });
+
+    setTasks(updatedTasks);
+  };
+
   return (
     <div className="app">
       <h1>Task Tracker</h1>
       <h2>An application for managing your tasks</h2>
       {tasks.map(task => (
-        <Task key={task.id} title={task.title} completed={task.completed}/>
+        <Task key={task.id} title={task.title} completed={task.completed} onToggle={() => toggleTask(task.id)}/>
       ))}
       
       <button>Add Task</button>
