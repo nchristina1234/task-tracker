@@ -8,7 +8,7 @@ function Task({ title, completed, onToggle }: TaskProps) {
 
   return (
     <div className="task">
-      <button onClick={onToggle}>{completed ? "✅" : "⬜"}</button>
+      <button className="completeButton" onClick={onToggle}>{completed ? "✅" : "⬜"}</button>
       <p>{title}</p>   
     </div>
   );

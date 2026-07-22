@@ -18,6 +18,7 @@ function App() {
     { id: 5, title: "Last Task", completed: false}
   ]);
 
+  //toggle completion of a task
   const toggleTask = (id: number) => {
     const updatedTasks = tasks.map(task => {
       if (task.id === id) {
@@ -26,23 +27,58 @@ function App() {
           completed: !task.completed,
         };
       }
-
       return task;
     });
-
     setTasks(updatedTasks);
   };
 
+  //title input field state
+  const [titleInput, setTitle] = useState('');
+
+  //
+  const handleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const addTask = () => {
+    //don't allow empty tasks
+    if (titleInput.trim()) {
+      //create a new task object
+      const newTask: Task = {
+        id: tasks.length + 1,
+        title: titleInput,
+        completed: false
+      };
+    
+      //append it to tasks
+      setTasks([...tasks, newTask]);
+    }
+
+    //clear the title input textfield
+      setTitle('');
+    
+  }
+
   return (
-    <div className="app">
+    <main className="app">
       <h1>Task Tracker</h1>
       <h2>An application for managing your tasks</h2>
       {tasks.map(task => (
         <Task key={task.id} title={task.title} completed={task.completed} onToggle={() => toggleTask(task.id)}/>
       ))}
-      
-      <button>Add Task</button>
-    </div>
+      <label htmlFor="new-task">New Task Title</label>
+      <div className="addTask">
+        <textarea
+          id="new-task"
+          value={titleInput}
+          onChange={handleChange}
+          placeholder="Enter new task title here..."
+          rows={4}
+          cols={70}
+        />
+        <button disabled={titleInput.trim() === ""} onClick={addTask}>Add Task</button>
+      </div>
+    </main>
   )
 }
 
