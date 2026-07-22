@@ -10,6 +10,7 @@ function App() {
     completed: boolean;
   }
 
+  //task list state
   const [tasks, setTasks] = useState<Task[]>([
     { id: 1, title: "Learn React", completed: false },
     { id: 2, title: "Connect FastAPI", completed: true },
@@ -35,7 +36,6 @@ function App() {
   //title input field state
   const [titleInput, setTitle] = useState('');
 
-  //
   const handleChange = (event) => {
     setTitle(event.target.value);
   };
@@ -49,14 +49,18 @@ function App() {
         title: titleInput,
         completed: false
       };
-    
       //append it to tasks
       setTasks([...tasks, newTask]);
     }
-
     //clear the title input textfield
       setTitle('');
     
+  }
+
+  //delete a task
+  const deleteTask = (id: number) => {
+    const updatedTasks = tasks.filter(task => task.id !== id);
+    setTasks(updatedTasks);
   }
 
   return (
@@ -64,7 +68,7 @@ function App() {
       <h1>Task Tracker</h1>
       <h2>An application for managing your tasks</h2>
       {tasks.map(task => (
-        <Task key={task.id} title={task.title} completed={task.completed} onToggle={() => toggleTask(task.id)}/>
+        <Task key={task.id} title={task.title} completed={task.completed} onToggle={() => toggleTask(task.id)} onDelete={() => deleteTask(task.id)}/>
       ))}
       <label htmlFor="new-task">New Task Title</label>
       <div className="addTask">

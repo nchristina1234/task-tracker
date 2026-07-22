@@ -2,14 +2,16 @@ type TaskProps = {
     title: string;
     completed: boolean;
     onToggle: () => void;
+    onDelete: () => void;
 }
 
-function Task({ title, completed, onToggle }: TaskProps) {
+function Task({ title, completed, onToggle, onDelete }: TaskProps) {
 
   return (
     <div className="task">
-      <button className="completeButton" onClick={onToggle}>{completed ? "✅" : "⬜"}</button>
-      <p>{title}</p>   
+      <div><button className="completeButton" onClick={onToggle}>{completed ? "✅" : "⬜"}</button></div>
+      <div><p>{title}</p></div>
+      <div><button className="deleteButton" onClick={onDelete}>Delete</button></div>
     </div>
   );
 }
