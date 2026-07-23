@@ -34,19 +34,19 @@ function App() {
   };
 
   //title input field state
-  const [titleInput, setTitle] = useState('');
+  const [newTitle, setTitle] = useState('');
 
-  const handleChange = (event) => {
+  const newTitleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(event.target.value);
   };
 
   const addTask = () => {
     //don't allow empty tasks
-    if (titleInput.trim()) {
+    if (newTitle.trim()) {
       //create a new task object
       const newTask: Task = {
         id: tasks.length + 1,
-        title: titleInput,
+        title: newTitle,
         completed: false
       };
       //append it to tasks
@@ -54,7 +54,6 @@ function App() {
     }
     //clear the title input textfield
       setTitle('');
-    
   }
 
   //delete a task
@@ -63,24 +62,42 @@ function App() {
     setTasks(updatedTasks);
   }
 
+  //save a task
+  const saveTask = (id: number, newTitle: string) => {
+    const updatedTasks = tasks.map(task => {
+      if (task.id === id) {
+        return {
+          ...task,
+          title: newTitle,
+        };
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+  };
+
+  //main application
   return (
     <main className="app">
       <h1>Task Tracker</h1>
       <h2>An application for managing your tasks</h2>
       {tasks.map(task => (
-        <Task key={task.id} title={task.title} completed={task.completed} onToggle={() => toggleTask(task.id)} onDelete={() => deleteTask(task.id)}/>
+        <Task key={task.id} title={task.title} completed={task.completed} 
+          onToggle={() => toggleTask(task.id)} 
+          onDelete={() => deleteTask(task.id)}
+          onSave={(newTitle) => saveTask(task.id, newTitle)}/>
       ))}
       <label htmlFor="new-task">New Task Title</label>
       <div className="addTask">
         <textarea
           id="new-task"
-          value={titleInput}
-          onChange={handleChange}
+          value={newTitle}
+          onChange={newTitleChange}
           placeholder="Enter new task title here..."
           rows={4}
           cols={70}
         />
-        <button disabled={titleInput.trim() === ""} onClick={addTask}>Add Task</button>
+        <button disabled={newTitle.trim() === ""} onClick={addTask}>Add Task</button>
       </div>
     </main>
   )

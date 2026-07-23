@@ -2,11 +2,6 @@
   padding: 20px;
 }
 
-button {
-  margin: 10px;
-  padding: 10px 15px;
-}
-
 p {
   margin-bottom: 0px;
 }
@@ -40,6 +35,18 @@ label {
   text-align: left;
 }
 
+
+
+/* Buttons */
+button {
+  margin: 10px;
+  padding: 10px 15px;
+}
+
 .completeButton {
   padding: 0px;
+}
+
+.editButton {
+  padding: 10px 20px;
 }
