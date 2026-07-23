@@ -1,6 +1,6 @@
 import './App.css'
 import Task from "./components/Task";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 function App() {
@@ -11,13 +11,7 @@ function App() {
   }
 
   //task list state
-  const [tasks, setTasks] = useState<Task[]>([
-    { id: 1, title: "Learn React", completed: false },
-    { id: 2, title: "Connect FastAPI", completed: true },
-    { id: 3, title: "Build UI", completed: false },
-    { id: 4, title: "Fourth Task", completed: true },
-    { id: 5, title: "Last Task", completed: false}
-  ]);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   //toggle completion of a task
   const toggleTask = (id: number) => {
@@ -75,6 +69,9 @@ function App() {
     });
     setTasks(updatedTasks);
   };
+
+  //after rendering the app, fetch tasks from backend and update tasklist
+  useEffect(() => { fetch("http://127.0.0.1:8000/tasks") .then(response => response.json()) .then(data => { setTasks(data); }); }, []);
 
   //main application
   return (
