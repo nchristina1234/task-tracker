@@ -34,20 +34,30 @@ function App() {
     setTitle(event.target.value);
   };
 
-  const addTask = () => {
+  // send post request to backend
+  const addTask = async () => {
     //don't allow empty tasks
     if (newTitle.trim()) {
-      //create a new task object
-      const newTask: Task = {
-        id: tasks.length + 1,
-        title: newTitle,
-        completed: false
-      };
-      //append it to tasks
+      const response = await fetch(
+        "http://127.0.0.1:8000/tasks",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                title: newTitle,
+                completed: false,
+            }),
+        }
+      );
+      const newTask = await response.json();
+      //append newTask to tasks
       setTasks([...tasks, newTask]);
     }
+
     //clear the title input textfield
-      setTitle('');
+    setTitle('');
   }
 
   //delete a task
