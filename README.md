@@ -49,7 +49,7 @@ DATABASE_URL=postgresql://<username>:<password>@localhost:5432/taskdb
 7. Start the FastAPI server:
 
 ```bash
-uvicorn main:app --reload
+python -m uvicorn main:app --reload
 ```
 8. Open the interactive Swagger API documentation at:
 

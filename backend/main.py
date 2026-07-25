@@ -31,7 +31,7 @@ def home():
 def get_all_tasks():
     db = SessionLocal()
     try:
-        tasks = db.query(TaskDB).all()
+        tasks = db.query(TaskDB).order_by(TaskDB.id).all()
         return tasks
     finally:
         db.close()

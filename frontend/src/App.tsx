@@ -66,17 +66,31 @@ function App() {
     setTasks(updatedTasks);
   }
 
-  //save a task
-  const saveTask = (id: number, newTitle: string) => {
-    const updatedTasks = tasks.map(task => {
-      if (task.id === id) {
-        return {
-          ...task,
+  // send patch request to backend
+  const saveTask = async (id: number, newTitle: string) => {
+    const currentTask = tasks.find(task => task.id === id);
+    if (!currentTask) {
+      return;
+    }
+    const response = await fetch(
+      `http://127.0.0.1:8000/tasks/${id}`,
+      {
+        method:"PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           title: newTitle,
-        };
+          completed: currentTask.completed,
+        }),
       }
-      return task;
-    });
+    );
+    if (!response.ok) {
+    console.error("Failed to update task");
+    return;
+}
+    const taskResponse = await fetch("http://127.0.0.1:8000/tasks")
+    const updatedTasks = await taskResponse.json()
     setTasks(updatedTasks);
   };
 
