@@ -13,23 +13,38 @@ function App() {
   //task list state
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  //toggle completion of a task
-  const toggleTask = (id: number) => {
-    const updatedTasks = tasks.map(task => {
-      if (task.id === id) {
-        return {
-          ...task,
-          completed: !task.completed,
-        };
+  //send patch request to backend (toggle task completion)
+  const toggleTask = async (id: number) => {
+    const currentTask = tasks.find(task => task.id === id);
+    if (!currentTask) {
+      return;
+    }
+    const response = await fetch(
+      `http://127.0.0.1:8000/tasks/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: currentTask.title,
+          completed: !currentTask.completed,
+        }),
       }
-      return task;
-    });
+    );
+    if (!response.ok) {
+      console.error("Failed to toggle completion of task");
+      return;
+    }
+    const taskResponse = await fetch("http://127.0.0.1:8000/tasks")
+    const updatedTasks = await taskResponse.json()
     setTasks(updatedTasks);
   };
 
   //title input field state
   const [newTitle, setTitle] = useState('');
 
+  // title input field event handler
   const newTitleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(event.target.value);
   };
@@ -76,7 +91,7 @@ function App() {
     setTasks(updatedTasks);
   }
 
-  // send patch request to backend
+  // send patch request to backend (edit task title)
   const saveTask = async (id: number, newTitle: string) => {
     const currentTask = tasks.find(task => task.id === id);
     if (!currentTask) {
@@ -96,7 +111,7 @@ function App() {
       }
     );
     if (!response.ok) {
-      console.error("Failed to update task");
+      console.error("Failed to save task");
       return;
     }
     const taskResponse = await fetch("http://127.0.0.1:8000/tasks")
