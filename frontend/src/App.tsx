@@ -60,9 +60,19 @@ function App() {
     setTitle('');
   }
 
-  //delete a task
-  const deleteTask = (id: number) => {
-    const updatedTasks = tasks.filter(task => task.id !== id);
+  //send delete request to backend
+  const deleteTask = async (id: number) => {
+    const response = await fetch(
+      `http://127.0.0.1:8000/tasks/${id}`,
+      {
+        method:"DELETE",
+      }
+    );
+    if (!response.ok) {
+      console.error("Failed to delete task")
+    }
+    const taskResponse = await fetch("http://127.0.0.1:8000/tasks")
+    const updatedTasks = await taskResponse.json()
     setTasks(updatedTasks);
   }
 
@@ -86,9 +96,9 @@ function App() {
       }
     );
     if (!response.ok) {
-    console.error("Failed to update task");
-    return;
-}
+      console.error("Failed to update task");
+      return;
+    }
     const taskResponse = await fetch("http://127.0.0.1:8000/tasks")
     const updatedTasks = await taskResponse.json()
     setTasks(updatedTasks);
